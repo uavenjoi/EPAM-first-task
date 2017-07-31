@@ -5,6 +5,6 @@ namespace SimpleCRUD2.Data.Interfaces
 {
     public interface IUserContext
     {
-        DbSet<User> Users { get; set; }
+        IDbSet<User> Users { get; set; }
     }
 }

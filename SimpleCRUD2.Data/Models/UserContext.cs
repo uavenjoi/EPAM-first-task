@@ -10,6 +10,6 @@ namespace SimpleCRUD2.Data.Models
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        public IDbSet<User> Users { get; set; }
     }
 }

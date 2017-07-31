@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
-using SimpleCRUD2.Data;
 
 namespace SimpleCRUD2
 {
@@ -11,7 +10,7 @@ namespace SimpleCRUD2
             var builder = new ContainerBuilder();
 
             builder.RegisterModule<SimpleCRUD2.Modules.DataModule>();
-            builder.RegisterModule<DataModule>();
+            builder.RegisterModule<SimpleCRUD2.Data.DataModule>();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             return builder.Build();
