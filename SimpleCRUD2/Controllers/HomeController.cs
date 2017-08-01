@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
+using SimpleCRUD2.Models.ViewModels;
 
 namespace SimpleCRUD2.Controllers
 {
@@ -16,9 +18,19 @@ namespace SimpleCRUD2.Controllers
         }
         
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return this.View(this.repository.GetUsersList());
+            var users = this.repository.GetUsersList();
+
+            var pageSize = 5;
+
+            var usersPerPage = users.Skip((page - 1) * pageSize).Take(pageSize);
+
+            var pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = users.Count() };
+
+            var viewModel = new IndexViewModel { PageInfo = pageInfo, Users = usersPerPage };
+
+            return this.View(viewModel);
         }
 
         [HttpGet]
@@ -42,6 +54,7 @@ namespace SimpleCRUD2.Controllers
         }
 
         [HttpGet]
+        [HandleError(ExceptionType = typeof(NullReferenceException), View = "UserNotExistError")]
         public ActionResult EditUserInfo(int id)
         {
             var user = this.repository.GetUserById(id);

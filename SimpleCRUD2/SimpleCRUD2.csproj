@@ -165,7 +165,9 @@
       <DependentUpon>201707251109460_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\ViewModels\IndexViewModel.cs" />
     <Compile Include="Modules\DataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Modules\RegistrationModule.cs" />
@@ -184,6 +186,7 @@
     <Content Include="Views\Home\EditUserInfo.cshtml" />
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\Home\DeleteUser.cshtml" />
+    <Content Include="Views\Shared\UserNotExistError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
