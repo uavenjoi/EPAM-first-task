@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD2", "SimpleCRUD2\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD2.Data", "SimpleCRUD2.Data\SimpleCRUD2.Data.csproj", "{9B5617E6-C2A0-48D2-8CCF-C278B770D5AA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC5C9EDE-825A-4CD7-AADD-44C8FB217872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD2.Test", "SimpleCRUD2.Test\SimpleCRUD2.Test.csproj", "{DE45CCE0-E6FB-49A6-B0DD-431F85979787}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{9B5617E6-C2A0-48D2-8CCF-C278B770D5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B5617E6-C2A0-48D2-8CCF-C278B770D5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B5617E6-C2A0-48D2-8CCF-C278B770D5AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE45CCE0-E6FB-49A6-B0DD-431F85979787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE45CCE0-E6FB-49A6-B0DD-431F85979787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE45CCE0-E6FB-49A6-B0DD-431F85979787}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE45CCE0-E6FB-49A6-B0DD-431F85979787}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DE45CCE0-E6FB-49A6-B0DD-431F85979787} = {FC5C9EDE-825A-4CD7-AADD-44C8FB217872}
 	EndGlobalSection
 EndGlobal

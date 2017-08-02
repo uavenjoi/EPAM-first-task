@@ -30,13 +30,13 @@ namespace SimpleCRUD2.Controllers
 
             var viewModel = new IndexViewModel { PageInfo = pageInfo, Users = usersPerPage };
 
-            return this.View(viewModel);
+            return this.View("Index", viewModel);
         }
 
         [HttpGet]
         public ActionResult AddUser()
         {
-            return this.View();
+            return this.View("AddUser");
         }
 
         [HttpPost]
@@ -50,15 +50,15 @@ namespace SimpleCRUD2.Controllers
                 return this.RedirectToAction("Index");
             }
 
-            return this.View(userModel);
+            return this.View("AddUser", userModel);
         }
 
         [HttpGet]
         [HandleError(ExceptionType = typeof(NullReferenceException), View = "UserNotExistError")]
         public ActionResult EditUserInfo(int id)
         {
-            var user = this.repository.GetUserById(id);
-            return this.View(user);
+            var userModel = this.repository.GetUserById(id);
+            return this.View("EditUserInfo", userModel);
         }
 
         [HttpPost]
@@ -72,13 +72,15 @@ namespace SimpleCRUD2.Controllers
                 return this.RedirectToAction("Index");
             }
 
-            return this.View(userModel);
+            return this.View("EditUserInfo", userModel);
         }
 
         [HttpGet]
         public ActionResult DeleteUser(int id)
         {
-            return this.View(this.repository.GetUserById(id));
+            var userModel = this.repository.GetUserById(id);
+
+            return this.View("DeleteUser", userModel);
         }
 
         [HttpPost]

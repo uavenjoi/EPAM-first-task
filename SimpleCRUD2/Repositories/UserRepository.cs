@@ -40,7 +40,7 @@ namespace SimpleCRUD2.Repositories
             user.Location = userModel.Location;
             user.Birthday = userModel.Birthday;
 
-            (this.context as UserContext).SaveChanges();
+            this.context.SaveChanges();
         }
 
         public void AddUser(UserModel userModel)
@@ -55,7 +55,7 @@ namespace SimpleCRUD2.Repositories
             };
 
             this.context.Users.Add(user);
-            (this.context as UserContext).SaveChanges();
+            this.context.SaveChanges();
         }
 
         public UserModel GetUserById(int id)
@@ -71,7 +71,7 @@ namespace SimpleCRUD2.Repositories
             var user = this.context.Users.Where(_ => _.UserId == id).FirstOrDefault();
 
             this.context.Users.Remove(user);
-            (this.context as UserContext).SaveChanges();
+            this.context.SaveChanges();
         }
     }
 }

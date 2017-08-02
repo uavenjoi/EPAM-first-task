@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="SimpleCRUD2.Test.UserRepositoryTest.GetUsersList_ReturnsIEnumerableOfUserModel" /><Add Test="SimpleCRUD2.Test.UserRepositoryTest.GetUserById_ReturnsCorrectUserModel" /><Add Test="SimpleCRUD2.Test.UserRepositoryTest.DeleteUserById_DeleteCorrectUser" /></Playlist>

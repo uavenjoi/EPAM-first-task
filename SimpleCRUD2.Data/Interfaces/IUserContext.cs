@@ -6,5 +6,7 @@ namespace SimpleCRUD2.Data.Interfaces
     public interface IUserContext
     {
         IDbSet<User> Users { get; set; }
+
+        int SaveChanges();
     }
 }
