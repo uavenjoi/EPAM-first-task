@@ -1,6 +1,5 @@
 ﻿@model SimpleCRUD2.Models.ViewModels.IndexViewModel
 
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -52,45 +51,7 @@
             }
         </tbody>
     </table>
-    <ul class="pagination pagination-sm">
-        @if (Model.PageInfo.PageNumber > 1)
-        {
-            <li><a href="@Url.Action("Index", "Home", new { page = Model.PageInfo.PageNumber - 1 })">&laquo;</a></li>
-        }
-        else
-        {
-            <li class="disabled"><a href="#">&laquo;</a></li>
-        }
 
-        @for (int i = Model.PageInfo.PageNumber - 2; i <= Model.PageInfo.PageNumber + 2 & i <= Model.PageInfo.TotalPages; i++)
-        {
-            if (i > 0)
-            {
-                <li id="@i"><a href="@Url.Action("Index", "Home", new { page = i })">@i</a></li>
-            }
-        }
-
-        @if (Model.PageInfo.PageNumber < Model.PageInfo.TotalPages)
-        {
-            <li><a href="@Url.Action("Index", "Home", new { page = Model.PageInfo.PageNumber + 1 })">&raquo;</a></li>
-        }
-        else
-        {
-            <li class="disabled"><a href="#">&raquo;</a></li>
-        }
-
-    </ul>
+    @Html.Partial("_Pagination", Model.PageInfo)
 </body>
 </html>
-
-@section scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var a = @Model.PageInfo.PageNumber;
-
-            var activeLi = $('li#'+a);
-
-            activeLi.addClass('active');
-        });
-    </script>
-}

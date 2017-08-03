@@ -5,10 +5,13 @@ namespace SimpleCRUD2.Data.Models
 {
     public class User
     {
+        [Required]
         public int UserId { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Surname { get; set; }
 
         public string Location { get; set; }

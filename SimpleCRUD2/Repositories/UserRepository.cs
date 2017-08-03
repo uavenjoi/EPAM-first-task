@@ -16,19 +16,40 @@ namespace SimpleCRUD2.Repositories
             this.context = context;
         }
 
+        public int UsersCount
+        {
+            get
+            {
+                return this.context.Users.Count();
+            }
+        }
+
         public IEnumerable<UserModel> GetUsersList()
         {
-            var userList = this.context.Users.ToList();
-
-            var userModelList = new List<UserModel>();
-
-            foreach (var user in userList)
+            var users = this.context.Users.Select(_ => new UserModel()
             {
-                var userModel = new UserModel(user);
-                userModelList.Add(userModel);
-            }
+                UserId = _.UserId,
+                Name = _.Name,
+                Surname = _.Surname,
+                Location = _.Location,
+                Birthday = _.Birthday
+            }).ToList();
 
-            return userModelList;
+            return users;
+        }
+
+        public IEnumerable<UserModel> GetUsersListForPage(int pageNumber, int pageSize)
+        {
+            IEnumerable<UserModel> users = this.context.Users.Select(_ => new UserModel()
+            {
+                UserId = _.UserId,
+                Name = _.Name,
+                Surname = _.Surname,
+                Location = _.Location,
+                Birthday = _.Birthday
+            }).ToList().Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            return users;
         }
 
         public void EditUserInfo(UserModel userModel)

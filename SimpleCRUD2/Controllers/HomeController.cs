@@ -18,17 +18,15 @@ namespace SimpleCRUD2.Controllers
         }
         
         [HttpGet]
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int pageNumber = 1)
         {
-            var users = this.repository.GetUsersList();
-
             var pageSize = 5;
 
-            var usersPerPage = users.Skip((page - 1) * pageSize).Take(pageSize);
+            var users = this.repository.GetUsersListForPage(pageNumber, pageSize);
 
-            var pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = users.Count() };
+            var pageInfo = new PageInfo { PageNumber = pageNumber, PageSize = pageSize, TotalItems = this.repository.UsersCount };
 
-            var viewModel = new IndexViewModel { PageInfo = pageInfo, Users = usersPerPage };
+            var viewModel = new IndexViewModel { PageInfo = pageInfo, Users = users };
 
             return this.View("Index", viewModel);
         }

@@ -97,13 +97,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbSetMock.cs" />
-    <Compile Include="HomeControllerTest.cs" />
+    <Compile Include="Mocks\DbSetMock.cs" />
+    <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestHelper.cs" />
-    <Compile Include="UserContextMock.cs" />
-    <Compile Include="UserRepositoryMock.cs" />
-    <Compile Include="UserRepositoryTest.cs" />
+    <Compile Include="Helpers\TestHelper.cs" />
+    <Compile Include="Mocks\UserRepositoryMock.cs" />
+    <Compile Include="Repositories\UserRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

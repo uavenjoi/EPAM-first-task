@@ -65,15 +65,10 @@ namespace SimpleCRUD2.Test
 
             Assert.IsInstanceOf(typeof(IEnumerable<UserModel>), ((IndexViewModel)result.Model).Users);
             Assert.AreEqual(5, ((IndexViewModel)result.Model).Users.Count());
-
-            ViewResult result2 = this.controller.Index(2) as ViewResult;
-
-            Assert.IsInstanceOf(typeof(IEnumerable<UserModel>), ((IndexViewModel)result2.Model).Users);
-            Assert.AreEqual(2, ((IndexViewModel)result2.Model).Users.Count());
         }
 
         [Test]
-        public void Index_PageInfoTest()
+        public void Index_PageInfoTestOne()
         {
             ViewResult result = this.controller.Index(1) as ViewResult;
 
@@ -86,7 +81,11 @@ namespace SimpleCRUD2.Test
             Assert.AreEqual(7, model.PageInfo.TotalItems);
             Assert.AreEqual(2, model.PageInfo.TotalPages);
             Assert.AreEqual(2, model.PageInfo.PageCountPerPage);
+        }
 
+        [Test]
+        public void Index_PageInfoTestTwo()
+        {
             ViewResult result2 = this.controller.Index(2) as ViewResult;
 
             var model2 = result2.Model as IndexViewModel;
@@ -100,67 +99,52 @@ namespace SimpleCRUD2.Test
             Assert.AreEqual(2, model2.PageInfo.PageCountPerPage);
         }
 
-        [Test]
-        public void EditUserInfo_ReturnCorrectView()
-        {
-            ViewResult result = this.controller.EditUserInfo(1) as ViewResult;
+    [Test]
+    public void EditUserInfo_ReturnCorrectView()
+    {
+        ViewResult result = this.controller.EditUserInfo(1) as ViewResult;
 
-            Assert.AreEqual("EditUserInfo", result.ViewName);
-        }
-
-        [Test]
-        public void EditUserInfo_ReturnCorrectValueIfModelIsValid()
-        {
-            var userModel = new UserModel();
-
-            RedirectToRouteResult result = this.controller.EditUserInfo(userModel) as RedirectToRouteResult;
-
-            Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-        }
-
-        [Test]
-        public void EditUserInfo_ReturnCorrectViewIfModelIsNotValid()
-        {
-            var userModel = new UserModel();
-
-            this.controller.ModelState.AddModelError(string.Empty, string.Empty);
-
-            ViewResult result = this.controller.EditUserInfo(userModel) as ViewResult;
-
-            Assert.AreEqual("EditUserInfo", result.ViewName);
-        }
-
-        [Test]
-        public void DeleteUser_ReturnCorrectView()
-        {
-            ViewResult result = this.controller.DeleteUser(1) as ViewResult;
-
-            Assert.AreEqual("DeleteUser", result.ViewName);
-
-            ViewResult result2 = this.controller.DeleteUser(1000000) as ViewResult;
-
-            Assert.AreEqual("DeleteUser", result2.ViewName);
-
-            ViewResult result3 = this.controller.DeleteUser(1000000000) as ViewResult;
-
-            Assert.AreEqual("DeleteUser", result3.ViewName);
-        }
-
-        [Test]
-        public void DeleteUserById_ReturnCorrectView()
-        {
-            ViewResult result = this.controller.DeleteUserById(1) as ViewResult;
-
-            Assert.AreEqual("Index", result.ViewName);
-
-            ViewResult result2 = this.controller.DeleteUserById(1000000) as ViewResult;
-
-            Assert.AreEqual("Index", result2.ViewName);
-
-            ViewResult result3 = this.controller.DeleteUserById(1000000000) as ViewResult;
-
-            Assert.AreEqual("Index", result3.ViewName);
-        }
+        Assert.AreEqual("EditUserInfo", result.ViewName);
     }
+
+    [Test]
+    public void EditUserInfo_ReturnCorrectValueIfModelIsValid()
+    {
+        var userModel = new UserModel();
+
+        RedirectToRouteResult result = this.controller.EditUserInfo(userModel) as RedirectToRouteResult;
+
+        Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
+        Assert.AreEqual("Index", result.RouteValues["action"]);
+    }
+
+    [Test]
+    public void EditUserInfo_ReturnCorrectViewIfModelIsNotValid()
+    {
+        var userModel = new UserModel();
+
+        this.controller.ModelState.AddModelError(string.Empty, string.Empty);
+
+        ViewResult result = this.controller.EditUserInfo(userModel) as ViewResult;
+
+        Assert.AreEqual("EditUserInfo", result.ViewName);
+    }
+
+    [Test]
+    public void DeleteUser_ReturnCorrectView()
+    {
+        ViewResult result = this.controller.DeleteUser(1) as ViewResult;
+
+        Assert.AreEqual("DeleteUser", result.ViewName);
+    }
+
+    [Test]
+    public void DeleteUserById_ReturnCorrectView()
+    {
+        RedirectToRouteResult result = this.controller.DeleteUserById(1) as RedirectToRouteResult;
+
+        Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
+        Assert.AreEqual("Index", result.RouteValues["action"]);
+    }
+}
 }
