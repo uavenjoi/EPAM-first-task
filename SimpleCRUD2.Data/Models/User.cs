@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SimpleCRUD2.Data.Models
 {
     public class User
     {
+        public User()
+        {
+            this.Roles = new HashSet<Role>();
+        }
+
         [Required]
         public int UserId { get; set; }
 
@@ -24,5 +30,7 @@ namespace SimpleCRUD2.Data.Models
 
         [DataType(DataType.Date)]
         public DateTime? Birthday { get; set; }
+
+        public virtual ICollection<Role> Roles { get; set; }
     }
 }

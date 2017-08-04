@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Security;
 using SimpleCRUD2.Data.Interfaces;
@@ -18,6 +19,8 @@ namespace SimpleCRUD2.Repositories
             this.context = context;
         }
 
+        // Users methods
+        #region
         public int UsersCount
         {
             get
@@ -59,7 +62,7 @@ namespace SimpleCRUD2.Repositories
         public void EditUserInfo(EditUserViewModel editUserViewModel)
         {
             var user = this.context.Users.Where(_ => _.UserId == editUserViewModel.UserId).FirstOrDefault();
-            
+
             user.Name = editUserViewModel.Name;
             user.Surname = editUserViewModel.Surname;
             user.Location = editUserViewModel.Location;
@@ -82,8 +85,10 @@ namespace SimpleCRUD2.Repositories
                     Name = userModel.Name,
                     Surname = userModel.Surname,
                     Location = userModel.Location,
-                    Birthday = userModel.Birthday
+                    Birthday = userModel.Birthday,
                 };
+
+                newUser.Roles.Add(this.context.Roles.First(_ => _.Name == "user"));
 
                 this.context.Users.Add(newUser);
                 this.context.SaveChanges();
@@ -94,11 +99,19 @@ namespace SimpleCRUD2.Repositories
             return false;
         }
 
+        public UserModel GetUserByEmail(string email)
+        {
+            var user = this.context.Users.Where(_ => _.Email == email).FirstOrDefault();
+            var userModel = new UserModel(user);
+
+            return userModel;
+        }
+
         public UserModel GetUserById(int id)
         {
             var user = this.context.Users.Where(_ => _.UserId == id).FirstOrDefault();
             var userModel = new UserModel(user);
-            
+
             return userModel;
         }
 
@@ -130,6 +143,92 @@ namespace SimpleCRUD2.Repositories
             }
 
             return true;
+        }
+        #endregion
+
+        public ICollection<Role> GetRolesForUser(string email)
+        {
+            var user = this.context.Users.FirstOrDefault(_ => _.Email == email);
+
+            if (user != null)
+            {
+                return user.Roles.ToList();
+            }
+
+            return new List<Role>();
+        }
+
+        public void CreateRole(string roleName)
+        {
+            Role newRole = new Role() { Name = roleName };
+
+            this.context.Roles.Add(newRole);
+            this.context.SaveChanges();
+        }
+
+        public bool IsUserInRole(string email, string roleName)
+        {
+            var user = this.context.Users.FirstOrDefault(_ => _.Email == email);
+            var role = this.context.Roles.FirstOrDefault(_ => _.Name == roleName);
+
+            if (user != null && role != null && user.Roles.Contains(role))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void RemoveUsersFromRoles(string[] emails, string[] roleNames)
+        {
+            var users = new List<User>();
+            var roles = new List<Role>();
+
+            foreach (var email in emails)
+            {
+                var user = this.context.Users.Where(_ => _.Email == email).FirstOrDefault();
+
+                foreach (var roleName in roleNames)
+                {
+                    var role = this.context.Roles.Where(_ => _.Name == roleName).FirstOrDefault();
+
+                    if (this.IsUserInRole(email, roleName))
+                    {
+                        user.Roles.Remove(role);
+                        this.context.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void AddUsersToRoles(string[] emails, string[] roleNames)
+        {
+            var users = new List<User>();
+            var roles = new List<Role>();
+
+            foreach (var email in emails)
+            {
+                var user = this.context.Users.Where(_ => _.Email == email).FirstOrDefault();
+
+                foreach (var roleName in roleNames)
+                {
+                    var role = this.context.Roles.Where(_ => _.Name == roleName).FirstOrDefault();
+
+                    if (!this.IsUserInRole(email, roleName))
+                    {
+                        user.Roles.Add(role);
+                        this.context.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void RemoveUserFromAllRoles(int id)
+        {
+            var user = this.context.Users.FirstOrDefault(_ => _.UserId == id);
+
+            user.Roles.Clear();
+            this.context.SaveChanges();
         }
     }
 }

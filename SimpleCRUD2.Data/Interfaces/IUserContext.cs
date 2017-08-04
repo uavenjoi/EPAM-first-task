@@ -7,6 +7,8 @@ namespace SimpleCRUD2.Data.Interfaces
     {
         IDbSet<User> Users { get; set; }
 
+        IDbSet<Role> Roles { get; set; }
+
         int SaveChanges();
     }
 }

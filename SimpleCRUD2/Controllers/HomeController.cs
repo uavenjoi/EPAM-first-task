@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
-using System.Web.Security;
 using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
@@ -9,7 +7,7 @@ using SimpleCRUD2.Models.ViewModels.HomeViewModels;
 
 namespace SimpleCRUD2.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "user")]
     [HandleError(ExceptionType = typeof(Exception), View = "Error")]
     public class HomeController : Controller
     {
@@ -35,12 +33,14 @@ namespace SimpleCRUD2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult AddUser()
         {
             return this.View("AddUser");
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult AddUser(UserModel userModel)
         {
@@ -55,6 +55,7 @@ namespace SimpleCRUD2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, moder")]
         [HandleError(ExceptionType = typeof(NullReferenceException), View = "UserNotExistError")]
         public ActionResult EditUserInfo(int id)
         {
@@ -66,6 +67,7 @@ namespace SimpleCRUD2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin, moder")]
         public ActionResult EditUserInfo(EditUserViewModel editUserViewModel)
         {
             if (ModelState.IsValid)
@@ -79,6 +81,7 @@ namespace SimpleCRUD2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin, moder")]
         public ActionResult DeleteUser(int id)
         {
             var userModel = this.repository.GetUserById(id);
@@ -88,6 +91,7 @@ namespace SimpleCRUD2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin, moder")]
         public ActionResult DeleteUserById(int id)
         {
             this.repository.DeleteUserById(id);

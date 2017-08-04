@@ -14,6 +14,7 @@ namespace SimpleCRUD2.Models
         {
             this.UserId = user.UserId;
             this.Name = user.Name;
+            this.Email = user.Email;
             this.Surname = user.Surname;
             this.Location = user.Location;
             this.Birthday = user.Birthday;

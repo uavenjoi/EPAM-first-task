@@ -35,6 +35,7 @@ namespace SimpleCRUD2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "user")]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();

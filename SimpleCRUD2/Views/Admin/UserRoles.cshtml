@@ -1,0 +1,29 @@
+﻿@model SimpleCRUD2.Models.ViewModels.AdminViewModels.UserInfoViewModel
+
+<h2>@Model.UserModel.Name @Model.UserModel.Surname info</h2>
+
+<h3>User's roles:</h3>
+<div>
+    @foreach(var role in Model.UserRoles)
+    {
+        <h4>@role.Name</h4>
+    }
+</div>
+
+<div>
+    @Html.ActionLink("Give/take away administrator role", "GiveUserAdminRole", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-primary btn-xs" })
+</div>
+<br />
+<div>
+    @Html.ActionLink("Give/take away moderator role", "GiveUserModerRole", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-primary btn-xs" })
+</div>
+<br />
+<div>
+    @Html.ActionLink("Take away all roles", "TakeAwayAllRoles", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-danger btn-xs" })
+</div>
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>
+
+
