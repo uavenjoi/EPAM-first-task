@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Data.Module.cs" />
     <Compile Include="Interfaces\IUserContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

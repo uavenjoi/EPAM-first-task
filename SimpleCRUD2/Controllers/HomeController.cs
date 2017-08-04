@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
+using SimpleCRUD2.Models.ViewModels.HomeViewModels;
 
 namespace SimpleCRUD2.Controllers
 {
+    [Authorize]
     [HandleError(ExceptionType = typeof(Exception), View = "Error")]
     public class HomeController : Controller
     {
@@ -16,12 +19,12 @@ namespace SimpleCRUD2.Controllers
         {
             this.repository = repository;
         }
-        
+
         [HttpGet]
         public ActionResult Index(int pageNumber = 1)
         {
             var pageSize = 5;
-
+            
             var users = this.repository.GetUsersListForPage(pageNumber, pageSize);
 
             var pageInfo = new PageInfo { PageNumber = pageNumber, PageSize = pageSize, TotalItems = this.repository.UsersCount };
@@ -41,12 +44,12 @@ namespace SimpleCRUD2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddUser(UserModel userModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && this.repository.AddUser(userModel))
             {
-                this.repository.AddUser(userModel);
-
                 return this.RedirectToAction("Index");
             }
+
+            ModelState.AddModelError(string.Empty, "Email's been registred");
 
             return this.View("AddUser", userModel);
         }
@@ -56,21 +59,23 @@ namespace SimpleCRUD2.Controllers
         public ActionResult EditUserInfo(int id)
         {
             var userModel = this.repository.GetUserById(id);
-            return this.View("EditUserInfo", userModel);
+            var editUserViewModel = new EditUserViewModel(userModel);
+
+            return this.View("EditUserInfo", editUserViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUserInfo(UserModel userModel)
+        public ActionResult EditUserInfo(EditUserViewModel editUserViewModel)
         {
             if (ModelState.IsValid)
             {
-                this.repository.EditUserInfo(userModel);
+                this.repository.EditUserInfo(editUserViewModel);
 
                 return this.RedirectToAction("Index");
             }
 
-            return this.View("EditUserInfo", userModel);
+            return this.View("EditUserInfo", editUserViewModel);
         }
 
         [HttpGet]

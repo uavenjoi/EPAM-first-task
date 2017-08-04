@@ -5,6 +5,7 @@ using NUnit.Framework;
 using SimpleCRUD2.Controllers;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
+using SimpleCRUD2.Models.ViewModels.HomeViewModels;
 
 namespace SimpleCRUD2.Test
 {
@@ -32,7 +33,7 @@ namespace SimpleCRUD2.Test
         {
             var userModel = new UserModel();
 
-            RedirectToRouteResult result = this.controller.EditUserInfo(userModel) as RedirectToRouteResult;
+            RedirectToRouteResult result = this.controller.AddUser(userModel) as RedirectToRouteResult;
 
             Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
             Assert.AreEqual("Index", result.RouteValues["action"]);
@@ -110,9 +111,9 @@ namespace SimpleCRUD2.Test
     [Test]
     public void EditUserInfo_ReturnCorrectValueIfModelIsValid()
     {
-        var userModel = new UserModel();
+        var editUserViewModel = new EditUserViewModel();
 
-        RedirectToRouteResult result = this.controller.EditUserInfo(userModel) as RedirectToRouteResult;
+        RedirectToRouteResult result = this.controller.EditUserInfo(editUserViewModel) as RedirectToRouteResult;
 
         Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
         Assert.AreEqual("Index", result.RouteValues["action"]);
@@ -121,11 +122,11 @@ namespace SimpleCRUD2.Test
     [Test]
     public void EditUserInfo_ReturnCorrectViewIfModelIsNotValid()
     {
-        var userModel = new UserModel();
+        var editUserViewModel = new EditUserViewModel();
 
         this.controller.ModelState.AddModelError(string.Empty, string.Empty);
 
-        ViewResult result = this.controller.EditUserInfo(userModel) as ViewResult;
+        ViewResult result = this.controller.EditUserInfo(editUserViewModel) as ViewResult;
 
         Assert.AreEqual("EditUserInfo", result.ViewName);
     }

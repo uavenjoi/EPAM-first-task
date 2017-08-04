@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
+using SimpleCRUD2.Models.ViewModels.HomeViewModels;
 
 namespace SimpleCRUD2.Test
 {
@@ -23,7 +25,7 @@ namespace SimpleCRUD2.Test
         {
         }
 
-        public void EditUserInfo(UserModel user)
+        public void EditUserInfo(EditUserViewModel editUserViewModel)
         {
         }
 
@@ -43,6 +45,21 @@ namespace SimpleCRUD2.Test
         {
             var fiveUsers = TestHelper.GetSevenUsersList().Skip(2);
             return fiveUsers;
+        }
+
+        public bool IsRegistred(string email)
+        {
+            return false;
+        }
+
+        public bool ValidateUser(string email, string password)
+        {
+            return true;
+        }
+
+        bool IUserRepository.AddUser(UserModel user)
+        {
+            return true;
         }
     }
 }

@@ -157,17 +157,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Migrations\201707250755059_InitialCreate.cs" />
-    <Compile Include="Migrations\201707250755059_InitialCreate.Designer.cs">
-      <DependentUpon>201707250755059_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707251109460_first.cs" />
-    <Compile Include="Migrations\201707251109460_first.Designer.cs">
-      <DependentUpon>201707251109460_first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\HomeViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\ViewModels\IndexViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Modules\DataModule.cs" />
@@ -190,6 +183,7 @@
     <Content Include="Views\Home\DeleteUser.cshtml" />
     <Content Include="Views\Shared\UserNotExistError.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -199,15 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707250755059_InitialCreate.resx">
-      <DependentUpon>201707250755059_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707251109460_first.resx">
-      <DependentUpon>201707251109460_first.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleCRUD2.Data\SimpleCRUD2.Data.csproj">

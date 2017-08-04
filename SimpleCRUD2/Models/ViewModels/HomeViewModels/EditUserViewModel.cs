@@ -1,29 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using SimpleCRUD2.Data.Models;
+using System.Linq;
+using System.Web;
 
-namespace SimpleCRUD2.Models
+namespace SimpleCRUD2.Models.ViewModels.HomeViewModels
 {
-    public class UserModel
+    public class EditUserViewModel
     {
-        public UserModel()
+        public EditUserViewModel()
         {
         }
 
-        public UserModel(User user)
+        public EditUserViewModel(UserModel userModel)
         {
-            this.UserId = user.UserId;
-            this.Name = user.Name;
-            this.Surname = user.Surname;
-            this.Location = user.Location;
-            this.Birthday = user.Birthday;
+            this.UserId = userModel.UserId;
+            this.Name = userModel.Name;
+            this.Surname = userModel.Surname;
+            this.Location = userModel.Location;
+            this.Birthday = userModel.Birthday;
         }
 
         public int UserId { get; set; }
-
-        [Required]
-        [StringLength(30, MinimumLength = 8, ErrorMessage = "The email must be at least 8 characters and no longer than 30")]
-        public string Email { get; set; }
 
         [Required]
         [StringLength(15, MinimumLength = 2, ErrorMessage = "The name must be at least 2 characters and no longer than 15")]

@@ -1,0 +1,31 @@
+﻿@model SimpleCRUD2.Models.ViewModels.AccountViewModels.LoginViewModel
+
+<div style="margin: auto; width:300px">
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+        @Html.AntiForgeryToken()
+        <h4>Log in</h4>
+        <hr />
+        @Html.ValidationSummary()
+        <div>
+            <div>
+                @Html.LabelFor(_ => _.Email)
+            </div>
+            <div>
+                @Html.EditorFor(_=>_.Email)
+            </div>
+        </div>
+        <div>
+            <div>
+                @Html.LabelFor(_ => _.Password)
+            </div>
+            <div>
+                @Html.EditorFor(_ => _.Password)
+            </div>
+        </div>
+            <br />
+            <div>
+                <input class="btn btn-default" type="submit" value="Log in" />
+            </div>
+    }
+</div>

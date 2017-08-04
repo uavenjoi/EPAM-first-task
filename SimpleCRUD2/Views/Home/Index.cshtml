@@ -15,6 +15,7 @@
             <tr>
                 <th>Name</th>
                 <th>Surname</th>
+                <th>Email</th>
                 <th>Location</th>
                 <th>Birthday</th>
             </tr>
@@ -29,6 +30,9 @@
                     </td>
                     <td>
                         @user.Surname
+                    </td>
+                    <td>
+                        @user.Email
                     </td>
                     <td>
                         @user.Location
@@ -53,5 +57,7 @@
     </table>
 
     @Html.Partial("_Pagination", Model.PageInfo)
+    <br />
+    @Html.ActionLink("Log out", "Logout", "Account")
 </body>
 </html>
