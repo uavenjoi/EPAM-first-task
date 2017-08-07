@@ -2,28 +2,39 @@
 
 <h2>@Model.UserModel.Name @Model.UserModel.Surname info</h2>
 
-<h3>User's roles:</h3>
-<div>
-    @foreach(var role in Model.UserRoles)
+@if (User.Identity.Name != Model.UserModel.Email)
+{
+    <h3>User's roles:</h3>
+
+    <div>
+        @foreach (var role in Model.UserRoles)
+        {
+            <h4>@role.Name</h4>
+        }
+    </div>
+    <br />
+
+    <h3>Give or take away role:</h3>
+
+    using (Html.BeginForm("AddOrRemoveRole", "Admin", FormMethod.Post))
     {
-        <h4>@role.Name</h4>
+        <input type="hidden" value="@Model.UserModel.UserId" name="userId" />
+
+        @Html.DropDownListFor(_ => _.RoleName, new SelectList(new[] { "admin", "moder", "user" }), "Select...")
+
+        <input type="submit" value="Confirm" />
     }
-</div>
+    <br />
+    @Html.ActionLink("Take away all roles", "TakeAwayAllRoles", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-danger btn-xs" })
+    <br />
+}
+else
+{
+    <h3> You can't manage your roles</h3>
+}
 
 <div>
-    @Html.ActionLink("Give/take away administrator role", "GiveUserAdminRole", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-primary btn-xs" })
-</div>
-<br />
-<div>
-    @Html.ActionLink("Give/take away moderator role", "GiveUserModerRole", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-primary btn-xs" })
-</div>
-<br />
-<div>
-    @Html.ActionLink("Take away all roles", "TakeAwayAllRoles", "Admin", new { id = Model.UserModel.UserId }, new { @class = "btn btn-danger btn-xs" })
-</div>
-<br />
-<div>
+    <br />
     @Html.ActionLink("Back to List", "Index", "Home")
 </div>
-
 

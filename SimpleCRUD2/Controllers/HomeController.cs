@@ -22,7 +22,7 @@ namespace SimpleCRUD2.Controllers
         public ActionResult Index(int pageNumber = 1)
         {
             var pageSize = 5;
-            
+
             var users = this.repository.GetUsersListForPage(pageNumber, pageSize);
 
             var pageInfo = new PageInfo { PageNumber = pageNumber, PageSize = pageSize, TotalItems = this.repository.UsersCount };
@@ -56,13 +56,18 @@ namespace SimpleCRUD2.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin, moder")]
-        [HandleError(ExceptionType = typeof(NullReferenceException), View = "UserNotExistError")]
+        [HandleError(ExceptionType = typeof(ArgumentException), View = "UserNotExistError")]
         public ActionResult EditUserInfo(int id)
         {
             var userModel = this.repository.GetUserById(id);
-            var editUserViewModel = new EditUserViewModel(userModel);
 
-            return this.View("EditUserInfo", editUserViewModel);
+            if (userModel != null)
+            {
+                var editUserViewModel = new EditUserViewModel(userModel);
+                return this.View("EditUserInfo", editUserViewModel);
+            }
+
+            return this.View("UserNotExistError");
         }
 
         [HttpPost]
@@ -82,11 +87,17 @@ namespace SimpleCRUD2.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin, moder")]
+        [HandleError(ExceptionType = typeof(ArgumentException), View = "UserNotExistError")]
         public ActionResult DeleteUser(int id)
         {
             var userModel = this.repository.GetUserById(id);
 
-            return this.View("DeleteUser", userModel);
+            if (userModel != null)
+            {
+                return this.View("DeleteUser", userModel);
+            }
+
+            return this.View("UserNotExistError");
         }
 
         [HttpPost]

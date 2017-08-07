@@ -7,3 +7,13 @@
         </span>
     </div>
 }
+
+@if (TempData["UserIsNotFound"] != null)
+{
+    <h3> User is not found</h3>
+}
+
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>

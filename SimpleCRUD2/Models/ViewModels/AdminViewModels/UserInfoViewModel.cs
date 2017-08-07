@@ -8,5 +8,7 @@ namespace SimpleCRUD2.Models.ViewModels.AdminViewModels
         public UserModel UserModel { get; set; }
 
         public ICollection<Role> UserRoles { get; set; }
+
+        public string RoleName { get; set; }
     }
 }

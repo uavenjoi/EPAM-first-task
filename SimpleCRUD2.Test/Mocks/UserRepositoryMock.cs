@@ -18,8 +18,14 @@ namespace SimpleCRUD2.Test
             }
         }
 
-        public void AddUser(UserModel user)
+        public bool AddUser(UserModel user)
         {
+            return true;
+        }
+
+        public void AddUsersToRoles(string[] emails, string[] roleNames)
+        {
+            throw new NotImplementedException();
         }
 
         public void CreateRole(string roleName)
@@ -40,11 +46,28 @@ namespace SimpleCRUD2.Test
             throw new NotImplementedException();
         }
 
+        public UserModel GetUserByEmail(string email)
+        {
+            var userModelFake = new UserModel();
+
+            if (email == "true")
+            {
+                return userModelFake;
+            }
+
+            return null;
+        }
+
         public UserModel GetUserById(int id)
         {
             var userModelFake = new UserModel();
 
-            return userModelFake;
+            if (id == 1)
+            {
+                return userModelFake;
+            }
+
+            return null;
         }
 
         public IEnumerable<UserModel> GetUsersList()
@@ -68,12 +91,17 @@ namespace SimpleCRUD2.Test
             throw new NotImplementedException();
         }
 
-        public bool ValidateUser(string email, string password)
+        public void RemoveUserFromAllRoles(int id)
         {
-            return true;
+            throw new NotImplementedException();
         }
 
-        bool IUserRepository.AddUser(UserModel user)
+        public void RemoveUsersFromRoles(string[] emails, string[] roleNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ValidateUser(string email, string password)
         {
             return true;
         }

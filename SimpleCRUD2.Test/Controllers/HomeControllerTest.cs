@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Moq;
 using NUnit.Framework;
 using SimpleCRUD2.Controllers;
+using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
 using SimpleCRUD2.Models.ViewModels.HomeViewModels;
@@ -100,52 +102,68 @@ namespace SimpleCRUD2.Test
             Assert.AreEqual(2, model2.PageInfo.PageCountPerPage);
         }
 
-    [Test]
-    public void EditUserInfo_ReturnCorrectView()
-    {
-        ViewResult result = this.controller.EditUserInfo(1) as ViewResult;
+        [Test]
+        public void EditUserInfo_ReturnCorrectView()
+        {
+            ViewResult result = this.controller.EditUserInfo(1) as ViewResult;
 
-        Assert.AreEqual("EditUserInfo", result.ViewName);
+            Assert.AreEqual("EditUserInfo", result.ViewName);
+        }
+
+        [Test]
+        public void EditUserInfo_ReturnCorrectViewIfUserEqualsNull()
+        {
+            ViewResult result = this.controller.EditUserInfo(2) as ViewResult;
+
+            Assert.AreEqual("UserNotExistError", result.ViewName);
+        }
+
+        [Test]
+        public void EditUserInfo_ReturnCorrectValueIfModelIsValid()
+        {
+            var editUserViewModel = new EditUserViewModel();
+
+            RedirectToRouteResult result = this.controller.EditUserInfo(editUserViewModel) as RedirectToRouteResult;
+
+            Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+
+        [Test]
+        public void EditUserInfo_ReturnCorrectViewIfModelIsNotValid()
+        {
+            var editUserViewModel = new EditUserViewModel();
+
+            this.controller.ModelState.AddModelError(string.Empty, string.Empty);
+
+            ViewResult result = this.controller.EditUserInfo(editUserViewModel) as ViewResult;
+
+            Assert.AreEqual("EditUserInfo", result.ViewName);
+        }
+
+        [Test]
+        public void DeleteUser_ReturnCorrectView()
+        {
+            ViewResult result = this.controller.DeleteUser(1) as ViewResult;
+
+            Assert.AreEqual("DeleteUser", result.ViewName);
+        }
+
+        [Test]
+        public void DeleteUser_ReturnCorrectViewIfUserEqualsNull()
+        {
+            ViewResult result = this.controller.DeleteUser(2) as ViewResult;
+
+            Assert.AreEqual("UserNotExistError", result.ViewName);
+        }
+
+        [Test]
+        public void DeleteUserById_ReturnCorrectView()
+        {
+            RedirectToRouteResult result = this.controller.DeleteUserById(1) as RedirectToRouteResult;
+
+            Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
     }
-
-    [Test]
-    public void EditUserInfo_ReturnCorrectValueIfModelIsValid()
-    {
-        var editUserViewModel = new EditUserViewModel();
-
-        RedirectToRouteResult result = this.controller.EditUserInfo(editUserViewModel) as RedirectToRouteResult;
-
-        Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
-        Assert.AreEqual("Index", result.RouteValues["action"]);
-    }
-
-    [Test]
-    public void EditUserInfo_ReturnCorrectViewIfModelIsNotValid()
-    {
-        var editUserViewModel = new EditUserViewModel();
-
-        this.controller.ModelState.AddModelError(string.Empty, string.Empty);
-
-        ViewResult result = this.controller.EditUserInfo(editUserViewModel) as ViewResult;
-
-        Assert.AreEqual("EditUserInfo", result.ViewName);
-    }
-
-    [Test]
-    public void DeleteUser_ReturnCorrectView()
-    {
-        ViewResult result = this.controller.DeleteUser(1) as ViewResult;
-
-        Assert.AreEqual("DeleteUser", result.ViewName);
-    }
-
-    [Test]
-    public void DeleteUserById_ReturnCorrectView()
-    {
-        RedirectToRouteResult result = this.controller.DeleteUserById(1) as RedirectToRouteResult;
-
-        Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
-        Assert.AreEqual("Index", result.RouteValues["action"]);
-    }
-}
 }

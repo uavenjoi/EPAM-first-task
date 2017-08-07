@@ -6,6 +6,7 @@ using SimpleCRUD2.Interfaces;
 
 namespace SimpleCRUD2.Providers
 {
+    [HandleError(ExceptionType = typeof(Exception), View = "Error")]
     public class UserRoleProvider : RoleProvider
     {
         public override string ApplicationName

@@ -102,30 +102,44 @@ namespace SimpleCRUD2.Repositories
         public UserModel GetUserByEmail(string email)
         {
             var user = this.context.Users.Where(_ => _.Email == email).FirstOrDefault();
-            var userModel = new UserModel(user);
 
-            return userModel;
+            if (user != null)
+            {
+                var userModel = new UserModel(user);
+                return userModel;
+            }
+
+            return null;
         }
 
         public UserModel GetUserById(int id)
         {
             var user = this.context.Users.Where(_ => _.UserId == id).FirstOrDefault();
-            var userModel = new UserModel(user);
 
-            return userModel;
+            if (user != null)
+            {
+                var userModel = new UserModel(user);
+                return userModel;
+            }
+
+            return null;
         }
 
         public void DeleteUserById(int id)
         {
             var user = this.context.Users.Where(_ => _.UserId == id).FirstOrDefault();
 
-            this.context.Users.Remove(user);
-            this.context.SaveChanges();
+            if (user != null)
+            {
+                this.context.Users.Remove(user);
+                this.context.SaveChanges();
+            }
         }
 
         public bool ValidateUser(string email, string password)
         {
             var user = this.context.Users.Where(_ => _.Email == email && _.Password == password).FirstOrDefault();
+
             if (user != null)
             {
                 return true;
@@ -137,6 +151,7 @@ namespace SimpleCRUD2.Repositories
         public bool IsRegistred(string email)
         {
             var user = this.context.Users.Where(_ => _.Email == email).FirstOrDefault();
+
             if (user == null)
             {
                 return false;
@@ -146,6 +161,8 @@ namespace SimpleCRUD2.Repositories
         }
         #endregion
 
+        // Roles methods
+        #region
         public ICollection<Role> GetRolesForUser(string email)
         {
             var user = this.context.Users.FirstOrDefault(_ => _.Email == email);
@@ -192,7 +209,7 @@ namespace SimpleCRUD2.Repositories
                 {
                     var role = this.context.Roles.Where(_ => _.Name == roleName).FirstOrDefault();
 
-                    if (this.IsUserInRole(email, roleName))
+                    if (user != null && role != null && this.IsUserInRole(email, roleName))
                     {
                         user.Roles.Remove(role);
                         this.context.SaveChanges();
@@ -214,7 +231,7 @@ namespace SimpleCRUD2.Repositories
                 {
                     var role = this.context.Roles.Where(_ => _.Name == roleName).FirstOrDefault();
 
-                    if (!this.IsUserInRole(email, roleName))
+                    if (user != null && role != null && !this.IsUserInRole(email, roleName))
                     {
                         user.Roles.Add(role);
                         this.context.SaveChanges();
@@ -227,8 +244,12 @@ namespace SimpleCRUD2.Repositories
         {
             var user = this.context.Users.FirstOrDefault(_ => _.UserId == id);
 
-            user.Roles.Clear();
-            this.context.SaveChanges();
+            if (user != null)
+            {
+                user.Roles.Clear();
+                this.context.SaveChanges();
+            }
         }
+        #endregion
     }
 }
