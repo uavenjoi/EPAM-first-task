@@ -7,11 +7,11 @@ namespace SimpleCRUD2.Controllers
 {
     public class AccountController : Controller
     {
-        private IUserRepository repository;
+        private IUserRepository repository;// рекомендуется переменные класса называть с нижнего подчеркивания _repository
 
         public AccountController(IUserRepository repository)
         {
-            this.repository = repository;
+            this.repository = repository; //чтобы потом можно было писать  _repository = repository. Нужно по возможности избегать this...., 
         }
 
         [HttpGet]
@@ -23,6 +23,8 @@ namespace SimpleCRUD2.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
+            //Лучше будет если ValidateUser() будет принимать не 2 параметра а один типа LoginViewModel. 
+            //А  внутри метода уже будет разбор на логин, пароль и тд
             if (ModelState.IsValid && this.repository.ValidateUser(loginViewModel.Email, loginViewModel.Password))
             {
                 FormsAuthentication.SetAuthCookie(loginViewModel.Email, false);
