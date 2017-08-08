@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using SimpleCRUD2.Interfaces;
+using SimpleCRUD2.Loggers;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
 using SimpleCRUD2.Models.ViewModels.HomeViewModels;
@@ -8,7 +9,6 @@ using SimpleCRUD2.Models.ViewModels.HomeViewModels;
 namespace SimpleCRUD2.Controllers
 {
     [Authorize(Roles = "user")]
-    [HandleError(ExceptionType = typeof(Exception), View = "Error")]
     public class HomeController : Controller
     {
         private IUserRepository repository;
@@ -61,13 +61,19 @@ namespace SimpleCRUD2.Controllers
         {
             var userModel = this.repository.GetUserById(id);
 
-            if (userModel != null)
+            if (userModel == null)
+            {
+                return this.View("UserNotExistError");
+            }
+            else if (!User.IsInRole("admin") && this.repository.IsUserInRole(userModel.Email, "admin"))
+            {
+                return this.View("NotEnoughRightsError");
+            }
+            else
             {
                 var editUserViewModel = new EditUserViewModel(userModel);
                 return this.View("EditUserInfo", editUserViewModel);
             }
-
-            return this.View("UserNotExistError");
         }
 
         [HttpPost]
@@ -92,12 +98,18 @@ namespace SimpleCRUD2.Controllers
         {
             var userModel = this.repository.GetUserById(id);
 
-            if (userModel != null)
+            if (userModel == null)
+            {
+                return this.View("UserNotExistError");
+            }
+            else if (!User.IsInRole("admin") && this.repository.IsUserInRole(userModel.Email, "admin"))
+            {
+                return this.View("NotEnoughRightsError");
+            }
+            else
             {
                 return this.View("DeleteUser", userModel);
             }
-
-            return this.View("UserNotExistError");
         }
 
         [HttpPost]
@@ -105,9 +117,21 @@ namespace SimpleCRUD2.Controllers
         [Authorize(Roles = "admin, moder")]
         public ActionResult DeleteUserById(int id)
         {
-            this.repository.DeleteUserById(id);
+            var userModel = this.repository.GetUserById(id);
 
-            return this.RedirectToAction("Index");
+            if (userModel == null)
+            {
+                return this.View("UserNotExistError");
+            }
+            else if (!User.IsInRole("admin") && this.repository.IsUserInRole(userModel.Email, "admin"))
+            {
+                return this.View("NotEnoughRightsError");
+            }
+            else
+            {
+                this.repository.DeleteUserById(id);
+                return this.RedirectToAction("Index");
+            }
         }
     }
 }

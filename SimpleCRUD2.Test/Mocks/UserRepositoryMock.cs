@@ -60,7 +60,10 @@ namespace SimpleCRUD2.Test
 
         public UserModel GetUserById(int id)
         {
-            var userModelFake = new UserModel();
+            var userModelFake = new UserModel()
+            {
+                Email = "test",
+            };
 
             if (id == 1)
             {
@@ -88,7 +91,12 @@ namespace SimpleCRUD2.Test
 
         public bool IsUserInRole(string email, string roleName)
         {
-            throw new NotImplementedException();
+            if (email == "test" && roleName == "admin")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void RemoveUserFromAllRoles(int id)

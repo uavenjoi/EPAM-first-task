@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Security;
 using SimpleCRUD2.Data.Interfaces;
 using SimpleCRUD2.Data.Models;
 using SimpleCRUD2.Interfaces;

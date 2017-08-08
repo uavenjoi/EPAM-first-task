@@ -141,11 +141,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <sourcecode name="HomeControllerTest.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="UserRepositoryTest.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2017/07/29 10:43:06.000</styleCop>
       <settingsFile>2017/08/03 12:42:36.900</settingsFile>
-      <sourceFile>2017/08/07 13:35:12.421</sourceFile>
+      <sourceFile>2017/08/07 15:16:25.322</sourceFile>
       <parser>2017/07/29 10:43:06.000</parser>
       <StyleCop.CSharp.DocumentationRules>2017/07/29 10:43:06.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -168,7 +168,7 @@
     <timestamps>
       <styleCop>2017/07/29 10:43:06.000</styleCop>
       <settingsFile>2017/08/03 12:42:36.900</settingsFile>
-      <sourceFile>2017/08/07 13:59:43.693</sourceFile>
+      <sourceFile>2017/08/08 12:27:00.019</sourceFile>
       <parser>2017/07/29 10:43:06.000</parser>
       <StyleCop.CSharp.DocumentationRules>2017/07/29 10:43:06.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -190,11 +190,11 @@
   <project key="-1127173222">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <sourcecode name="UserRepositoryTest.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="HomeControllerTest.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2017/07/29 10:43:06.000</styleCop>
       <settingsFile>2017/08/03 12:42:36.900</settingsFile>
-      <sourceFile>2017/08/07 15:16:25.322</sourceFile>
+      <sourceFile>2017/08/08 13:40:26.845</sourceFile>
       <parser>2017/07/29 10:43:06.000</parser>
       <StyleCop.CSharp.DocumentationRules>2017/07/29 10:43:06.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>

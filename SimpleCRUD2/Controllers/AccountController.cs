@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
 using SimpleCRUD2.Interfaces;
+using SimpleCRUD2.Loggers;
 using SimpleCRUD2.Models.ViewModels.AccountViewModels;
 
 namespace SimpleCRUD2.Controllers
@@ -26,6 +27,7 @@ namespace SimpleCRUD2.Controllers
             if (ModelState.IsValid && this.repository.ValidateUser(loginViewModel.Email, loginViewModel.Password))
             {
                 FormsAuthentication.SetAuthCookie(loginViewModel.Email, false);
+                Logger.Log.Info("User " + loginViewModel.Email + " log in");
                 return this.RedirectToAction("Index", "Home");
             }
 
@@ -39,6 +41,7 @@ namespace SimpleCRUD2.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Logger.Log.Info("User " + User.Identity.Name + " log out");
             return this.View("Login");
         }
     }

@@ -6,7 +6,6 @@ using SimpleCRUD2.Models.ViewModels.AdminViewModels;
 namespace SimpleCRUD2.Controllers
 {
     [Authorize(Roles = "admin")]
-    [HandleError(ExceptionType = typeof(Exception), View = "Error")]
     public class AdminController : Controller
     {
         private IUserRepository repository;

@@ -59,7 +59,7 @@
                         }
                     </td>
 
-                    @if (User.IsInRole("moder"))
+                    @if (User.IsInRole("moder") && User.Identity.Name != user.Email)
                     {
                         <td>
                             @Html.ActionLink("Edit", "EditUserInfo", "Home", new { id = user.UserId }, new { @class = "btn btn-info btn-xs" })

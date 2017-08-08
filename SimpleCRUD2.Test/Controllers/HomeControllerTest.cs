@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
 using Moq;
 using NUnit.Framework;
 using SimpleCRUD2.Controllers;
-using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
 using SimpleCRUD2.Models.ViewModels.HomeViewModels;
@@ -105,9 +106,43 @@ namespace SimpleCRUD2.Test
         [Test]
         public void EditUserInfo_ReturnCorrectView()
         {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(true);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
             ViewResult result = this.controller.EditUserInfo(1) as ViewResult;
 
             Assert.AreEqual("EditUserInfo", result.ViewName);
+        }
+
+        [Test]
+        public void EditUserInfo_ReturnCorrectViewIfUserHaveNoRights()
+        {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(false);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
+            ViewResult result = this.controller.EditUserInfo(1) as ViewResult;
+
+            Assert.AreEqual("NotEnoughRightsError", result.ViewName);
         }
 
         [Test]
@@ -142,17 +177,106 @@ namespace SimpleCRUD2.Test
         }
 
         [Test]
-        public void DeleteUser_ReturnCorrectView()
+        public void DeleteUser_ReturnCorrectViewIfUserHaveRights()
         {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(true);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
             ViewResult result = this.controller.DeleteUser(1) as ViewResult;
 
             Assert.AreEqual("DeleteUser", result.ViewName);
         }
 
         [Test]
+        public void DeleteUser_ReturnCorrectViewIfUserHaveNoRights()
+        {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(false);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
+            ViewResult result = this.controller.DeleteUser(1) as ViewResult;
+
+            Assert.AreEqual("NotEnoughRightsError", result.ViewName);
+        }
+
+        [Test]
         public void DeleteUser_ReturnCorrectViewIfUserEqualsNull()
         {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(false);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
             ViewResult result = this.controller.DeleteUser(2) as ViewResult;
+
+            Assert.AreEqual("UserNotExistError", result.ViewName);
+        }
+
+        [Test]
+        public void DeleteUserById_ReturnCorrectViewIfUserHaveNoRights()
+        {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(false);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
+            ViewResult result = this.controller.DeleteUserById(1) as ViewResult;
+
+            Assert.AreEqual("NotEnoughRightsError", result.ViewName);
+        }
+
+        [Test]
+        public void DeleteUserById_ReturnCorrectViewIfUserEqualsNull()
+        {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(false);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
+            ViewResult result = this.controller.DeleteUserById(2) as ViewResult;
 
             Assert.AreEqual("UserNotExistError", result.ViewName);
         }
@@ -160,6 +284,19 @@ namespace SimpleCRUD2.Test
         [Test]
         public void DeleteUserById_ReturnCorrectView()
         {
+            var mock = new Mock<IPrincipal>();
+            mock.Setup(_ => _.IsInRole("admin")).Returns(true);
+
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(_ => _.User)
+                       .Returns(mock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(_ => _.HttpContext)
+                                 .Returns(contextMock.Object);
+
+            this.controller.ControllerContext = controllerContextMock.Object;
+
             RedirectToRouteResult result = this.controller.DeleteUserById(1) as RedirectToRouteResult;
 
             Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
