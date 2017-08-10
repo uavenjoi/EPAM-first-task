@@ -1,0 +1,27 @@
+﻿@model SimpleCRUD2.Models.CourseModel
+
+<h2>Create course</h2>
+
+@using (Html.BeginForm("CreateCourse", "Course", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div>
+        <div>
+            @Html.LabelFor(_ => _.Name)
+        </div>
+        <div>
+            @Html.EditorFor(_ => _.Name)
+        </div>
+    </div>
+    <br />
+    <div class="form-actions no-color">
+        <input type="submit" value="Create" class="btn btn-danger" />
+    </div>
+}
+
+<div>
+    <br />
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>
+

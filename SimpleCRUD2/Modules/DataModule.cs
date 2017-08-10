@@ -10,6 +10,7 @@ namespace SimpleCRUD2.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<CourseRepository>().As<ICourseRepository>();
             base.Load(builder);
         }
     }

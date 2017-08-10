@@ -1,9 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using SimpleCRUD2.Data.Interfaces;
 
 namespace SimpleCRUD2.Data.Models
 {
-    public class UserContext : DbContext, IUserContext
+    public class UserContext : DbContext, IUserContext, ICourseContext
     {
         public UserContext()
             : base("DefaultConnection")
@@ -13,6 +14,10 @@ namespace SimpleCRUD2.Data.Models
         public IDbSet<User> Users { get; set; }
 
         public IDbSet<Role> Roles { get; set; }
+
+        public IDbSet<Lesson> Lessons { get; set; }
+
+        public IDbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -27,6 +32,26 @@ namespace SimpleCRUD2.Data.Models
                     _.MapRightKey("UserId");
                     _.ToTable("UsersRoles");
                 });
+
+            modelBuilder.Entity<Lesson>()
+                .HasMany<User>(_ => _.VisitingUsers)
+                .WithMany(_ => _.VisitedLessons)
+                .Map(_ =>
+                {
+                    _.MapLeftKey("LessonRefId");
+                    _.MapRightKey("UserId");
+                    _.ToTable("UsersLessons");
+                });
+
+            modelBuilder.Entity<Course>()
+                .HasMany<Lesson>(_ => _.Lessons)
+                .WithOptional(_=>_.Course)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Lesson>()
+                .Property(_ => _.DateTime)
+                .HasColumnType("datetime2");
+
 
             base.OnModelCreating(modelBuilder);
         }

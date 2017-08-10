@@ -9,6 +9,7 @@ namespace SimpleCRUD2.Data
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserContext>().As<IUserContext>();
+            builder.RegisterType<UserContext>().As<ICourseContext>();
             base.Load(builder);
         }
     }

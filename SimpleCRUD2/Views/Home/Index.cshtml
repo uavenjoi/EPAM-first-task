@@ -14,10 +14,18 @@
     <div>
         @if (User.IsInRole("admin"))
         {
-            @Html.ActionLink("Create new user", "AddUser", "Home", new { }, new { @class = "btn btn-success btn-sm" })
-            <br />
-            <br />
-            @Html.ActionLink("Role management", "Admin", "Admin", new { }, new { @class = "btn btn-success btn-sm" })
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.ActionLink("Create new user", "AddUser", "Home", new { }, new { @class = "btn btn-success btn-sm" })
+                </div>
+                <div class="col-md-4 col-md-pull-2">
+                    @Html.ActionLink("Role management", "Admin", "Admin", new { }, new { @class = "btn btn-success btn-sm" })
+                </div>
+                <div class="col-md-4 col-md-pull-4" style="padding-left: 25px">
+                    @Html.ActionLink("Create course", "CreateCourse", "Course", new { }, new { @class = "btn btn-success btn-sm" })
+                </div>
+            </div>
+
         }
     </div>
     <br />

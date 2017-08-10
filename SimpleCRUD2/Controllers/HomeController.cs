@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using SimpleCRUD2.Interfaces;
-using SimpleCRUD2.Loggers;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels;
 using SimpleCRUD2.Models.ViewModels.HomeViewModels;
