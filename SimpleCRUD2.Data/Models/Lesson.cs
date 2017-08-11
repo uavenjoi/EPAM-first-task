@@ -12,7 +12,7 @@ namespace SimpleCRUD2.Data.Models
     {
         public Lesson()
         {
-            this.VisitingUsers = new HashSet<User>();
+            this.MissingUsers = new HashSet<User>();
         }
 
         [Required]
@@ -27,6 +27,6 @@ namespace SimpleCRUD2.Data.Models
 
         public Course Course { get; set; }
 
-        public virtual ICollection<User> VisitingUsers { get; set; }
+        public virtual ICollection<User> MissingUsers { get; set; }
     }
 }

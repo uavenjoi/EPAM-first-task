@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using SimpleCRUD2.Data.Models;
 
 namespace SimpleCRUD2.Models
@@ -8,7 +9,15 @@ namespace SimpleCRUD2.Models
     {
         public CourseModel()
         {
-            this.Lessons = new HashSet<Lesson>();
+            this.Lessons = new HashSet<LessonModel>();
+        }
+
+        public CourseModel(Course course)
+        {
+            this.Name = course.Name;
+            this.CourseId = course.CourseId;
+            this.IsDone = course.IsDone;
+            this.Lessons = course.Lessons.Select(_ => new LessonModel(_)).ToList();
         }
 
         public int CourseId { get; set; }
@@ -20,6 +29,6 @@ namespace SimpleCRUD2.Models
         [Required]
         public bool IsDone { get; set; }
 
-        public virtual ICollection<Lesson> Lessons { get; set; }
+        public virtual ICollection<LessonModel> Lessons { get; set; }
     }
 }

@@ -37,6 +37,10 @@
                 <th>Email</th>
                 <th>Location</th>
                 <th>Birthday</th>
+                @if (User.IsInRole("moder"))
+                {
+                    <th>@Html.ActionLink("Open journal", "OpenJournal", "Moder", new { }, new { @class = "btn btn-info btn-sm" })</th>
+                }
             </tr>
         </thead>
         <tbody>

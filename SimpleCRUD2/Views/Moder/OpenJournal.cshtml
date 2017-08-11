@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SimpleCRUD2.Models.CourseModel>
+
+<h2>Courses list:</h2>
+
+@foreach (var course in Model)
+{
+    <div>
+        @Html.ActionLink(course.Name, "CourseInfo", "Moder", new { name = course.Name }, new { })
+    </div>
+}
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>

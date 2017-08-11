@@ -11,6 +11,7 @@ namespace SimpleCRUD2.Modules
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<CourseRepository>().As<ICourseRepository>();
+
             base.Load(builder);
         }
     }

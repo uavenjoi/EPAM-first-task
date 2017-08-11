@@ -17,6 +17,11 @@ namespace SimpleCRUD2
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
+            routes.MapRoute(
+                name: "NameParameter",
+                url: "{controller}/{action}/{name}",
+                defaults: new { controller = "Home", action = "Index", name = UrlParameter.Optional });
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SimpleCRUD2.Test
         [SetUp]
         public void Initialize()
         {
-            var mock = new Mock<IUserContext>();
+            var mock = new Mock<IContext>();
 
             var testRole = new Role { Name = "test" };
             var testRole2 = new Role { Name = "test2" };

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using SimpleCRUD2.Data.Models;
 
@@ -6,10 +7,6 @@ namespace SimpleCRUD2.Models
 {
     public class UserModel
     {
-        public UserModel()
-        {
-        }
-
         public UserModel(User user)
         {
             this.UserId = user.UserId;
@@ -18,6 +15,10 @@ namespace SimpleCRUD2.Models
             this.Surname = user.Surname;
             this.Location = user.Location;
             this.Birthday = user.Birthday;
+        }
+
+        public UserModel()
+        {
         }
 
         public int UserId { get; set; }
@@ -39,5 +40,20 @@ namespace SimpleCRUD2.Models
 
         [DataType(DataType.Date)]
         public DateTime? Birthday { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is UserModel == false)
+            {
+                return false;
+            }
+
+            return this.UserId.Equals((obj as UserModel).UserId);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.UserId.GetHashCode();
+        }
     }
 }

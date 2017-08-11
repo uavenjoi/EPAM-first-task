@@ -10,9 +10,9 @@ namespace SimpleCRUD2.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private IUserContext context;
+        private IContext context;
 
-        public UserRepository(IUserContext context)
+        public UserRepository(IContext context)
         {
             this.context = context;
         }
@@ -30,6 +30,24 @@ namespace SimpleCRUD2.Repositories
         public IEnumerable<UserModel> GetUsersList()
         {
             var users = this.context.Users.Select(_ => new UserModel()
+            {
+                UserId = _.UserId,
+                Name = _.Name,
+                Surname = _.Surname,
+                Email = _.Email,
+                Location = _.Location,
+                Birthday = _.Birthday
+            }).ToList();
+
+            return users;
+        }
+
+        public IEnumerable<UserModel> GetStudentsUsersList()
+        {
+            var adminRole = this.context.Roles.Single(_ => _.Name.Equals("admin"));
+            var moderRole = this.context.Roles.Single(_ => _.Name.Equals("moder"));
+
+            var users = this.context.Users.Where(_ => _.Roles.Count.Equals(1)).Select(_ => new UserModel()
             {
                 UserId = _.UserId,
                 Name = _.Name,

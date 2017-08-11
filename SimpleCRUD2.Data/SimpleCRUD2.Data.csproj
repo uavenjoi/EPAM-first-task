@@ -89,8 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data.Module.cs" />
-    <Compile Include="Interfaces\ICourseContext.cs" />
-    <Compile Include="Interfaces\IUserContext.cs" />
+    <Compile Include="Interfaces\IContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Lesson.cs" />

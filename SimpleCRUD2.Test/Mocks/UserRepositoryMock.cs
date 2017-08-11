@@ -46,6 +46,11 @@ namespace SimpleCRUD2.Test
             throw new NotImplementedException();
         }
 
+        public IEnumerable<UserModel> GetStudentsUsersList()
+        {
+            throw new NotImplementedException();
+        }
+
         public UserModel GetUserByEmail(string email)
         {
             var userModelFake = new UserModel();

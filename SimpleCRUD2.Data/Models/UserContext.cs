@@ -4,7 +4,7 @@ using SimpleCRUD2.Data.Interfaces;
 
 namespace SimpleCRUD2.Data.Models
 {
-    public class UserContext : DbContext, IUserContext, ICourseContext
+    public class UserContext : DbContext, IContext
     {
         public UserContext()
             : base("DefaultConnection")
@@ -34,8 +34,8 @@ namespace SimpleCRUD2.Data.Models
                 });
 
             modelBuilder.Entity<Lesson>()
-                .HasMany<User>(_ => _.VisitingUsers)
-                .WithMany(_ => _.VisitedLessons)
+                .HasMany<User>(_ => _.MissingUsers)
+                .WithMany(_ => _.NotVisitedLessons)
                 .Map(_ =>
                 {
                     _.MapLeftKey("LessonRefId");
@@ -45,13 +45,12 @@ namespace SimpleCRUD2.Data.Models
 
             modelBuilder.Entity<Course>()
                 .HasMany<Lesson>(_ => _.Lessons)
-                .WithOptional(_=>_.Course)
+                .WithOptional(_ => _.Course)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Lesson>()
                 .Property(_ => _.DateTime)
                 .HasColumnType("datetime2");
-
 
             base.OnModelCreating(modelBuilder);
         }

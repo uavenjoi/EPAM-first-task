@@ -1,4 +1,5 @@
-﻿using SimpleCRUD2.Models;
+﻿using System.Collections.Generic;
+using SimpleCRUD2.Models;
 
 namespace SimpleCRUD2.Interfaces
 {
@@ -9,5 +10,13 @@ namespace SimpleCRUD2.Interfaces
         CourseModel GetCourseByName(string name);
 
         void AddLesson(CourseModel courseModel, LessonModel lessonModel);
+
+        IEnumerable<CourseModel> GetReadyCourses();
+
+        LessonModel GetLessonById(int id);
+
+        void AddUserToMissingLesson(int userId, int lessonId);
+
+        IEnumerable<LessonModel> GetLessonListForPage(int pageNumber, int pageSize, string courseName);
     }
 }

@@ -15,6 +15,8 @@ namespace SimpleCRUD2.Interfaces
 
         IEnumerable<UserModel> GetUsersListForPage(int pageNumber, int pageSize);
 
+        IEnumerable<UserModel> GetStudentsUsersList();
+
         bool AddUser(UserModel user);
 
         void EditUserInfo(EditUserViewModel editUserViewModel);

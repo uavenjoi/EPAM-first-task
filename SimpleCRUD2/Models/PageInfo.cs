@@ -7,6 +7,10 @@ namespace SimpleCRUD2.Models
 {
     public class PageInfo
     {
+        public string ControllerName { get; set; }
+
+        public string ActionName { get; set; }
+
         public int PageNumber { get; set; }
 
         public int PageSize { get; set; }

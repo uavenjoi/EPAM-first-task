@@ -24,7 +24,14 @@ namespace SimpleCRUD2.Controllers
 
             var users = this.repository.GetUsersListForPage(pageNumber, pageSize);
 
-            var pageInfo = new PageInfo { PageNumber = pageNumber, PageSize = pageSize, TotalItems = this.repository.UsersCount };
+            var pageInfo = new PageInfo
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = this.repository.UsersCount,
+                ControllerName = "Home",
+                ActionName = "Index"
+            };
 
             var viewModel = new IndexViewModel { PageInfo = pageInfo, Users = users };
 

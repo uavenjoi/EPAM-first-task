@@ -9,7 +9,7 @@ namespace SimpleCRUD2.Data.Models
         public User()
         {
             this.Roles = new HashSet<Role>();
-            this.VisitedLessons = new HashSet<Lesson>();
+            this.NotVisitedLessons = new HashSet<Lesson>();
         }
 
         [Required]
@@ -34,6 +34,6 @@ namespace SimpleCRUD2.Data.Models
 
         public virtual ICollection<Role> Roles { get; set; }
 
-        public virtual ICollection<Lesson> VisitedLessons { get; set; }
+        public virtual ICollection<Lesson> NotVisitedLessons { get; set; }
     }
 }
