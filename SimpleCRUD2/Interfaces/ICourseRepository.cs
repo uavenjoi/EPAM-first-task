@@ -11,7 +11,11 @@ namespace SimpleCRUD2.Interfaces
 
         void AddLesson(CourseModel courseModel, LessonModel lessonModel);
 
+        void RemoveLessonById(int lessonId);
+
         IEnumerable<CourseModel> GetReadyCourses();
+
+        IEnumerable<LessonModel> GetAllLessons();
 
         LessonModel GetLessonById(int id);
 

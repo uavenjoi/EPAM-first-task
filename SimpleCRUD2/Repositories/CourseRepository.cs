@@ -36,98 +36,62 @@ namespace SimpleCRUD2.Repositories
 
         public IEnumerable<CourseModel> GetReadyCourses()
         {
-            var courses = this.context.Courses.Where(_ => _.IsDone).Select(_ => new CourseModel()
-            {
-                CourseId = _.CourseId,
-                Name = _.Name,
-                IsDone = _.IsDone,
-                Lessons = _.Lessons.Select(l => new LessonModel()
-                {
-                    LessonId = l.LessonId,
-                    Name = l.Name,
-                    DateTime = l.DateTime,
-                    MissingUsers = l.MissingUsers.Select(u => new UserModel()
-                    {
-                        UserId = u.UserId,
-                        Name = u.Name,
-                        Surname = u.Surname,
-                        Birthday = u.Birthday,
-                        Email = u.Email,
-                        Location = u.Location
-                    }).ToList()
-                }).ToList()
-            }).ToList();
+            var courses = this.context.Courses.Where(_ => _.IsDone).ToList();
 
-            return courses;
+            var coursesModels = new List<CourseModel>();
+
+            foreach (var course in courses)
+            {
+                coursesModels.Add(this.FromCourseToCourseModel(course));
+            }
+
+            return coursesModels;
+        }
+
+        public IEnumerable<LessonModel> GetAllLessons()
+        {
+            var lessons = this.context.Lessons.ToList();
+
+            var lessonsModels = new List<LessonModel>();
+
+            foreach (var lesson in lessons)
+            {
+                lessonsModels.Add(this.FromLessonToLessonModel(lesson));
+            }
+
+            return lessonsModels;
         }
 
         public IEnumerable<LessonModel> GetLessonListForPage(int pageNumber, int pageSize, string courseName)
         {
             var course = this.context.Courses.Single(_ => _.Name == courseName);
 
-            IEnumerable<LessonModel> lessons = course.Lessons.Select(_ => new LessonModel()
+            var lessonsModels = new List<LessonModel>();
+
+            foreach (var lesson in course.Lessons)
             {
-                LessonId = _.LessonId,
-                Name = _.Name,
-                DateTime = _.DateTime,
-                MissingUsers = _.MissingUsers.Select(u => new UserModel()
-                {
-                    UserId = u.UserId,
-                    Name = u.Name,
-                    Birthday = u.Birthday,
-                    Email = u.Email,
-                    Surname = u.Surname,
-                    Location = u.Location
-                }).ToList()
-            }).ToList().Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                lessonsModels.Add(this.FromLessonToLessonModel(lesson));
+            }
+
+            var lessons = lessonsModels.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
             return lessons;
         }
 
         public CourseModel GetCourseByName(string name)
         {
-            var courseModel = this.context.Courses.Where(_ => _.Name == name).Select(_ => new CourseModel()
-            {
-                CourseId = _.CourseId,
-                Name = _.Name,
-                IsDone = _.IsDone,
-                Lessons = _.Lessons.Select(l => new LessonModel()
-                {
-                    LessonId = l.LessonId,
-                    Name = l.Name,
-                    DateTime = l.DateTime,
-                    MissingUsers = l.MissingUsers.Select(u => new UserModel()
-                    {
-                        UserId = u.UserId,
-                        Name = u.Name,
-                        Surname = u.Surname,
-                        Birthday = u.Birthday,
-                        Email = u.Email,
-                        Location = u.Location
-                    }).ToList()
-                }).ToList()
-            }).Single();
+            var course = this.context.Courses.Single(_ => _.Name == name);
+
+            var courseModel = this.FromCourseToCourseModel(course);
 
             return courseModel;
         }
 
         public LessonModel GetLessonById(int id)
         {
-            var lessonModel = this.context.Lessons.Where(_ => _.LessonId == id).Select(_ => new LessonModel()
-            {
-                LessonId = _.LessonId,
-                Name = _.Name,
-                DateTime = _.DateTime,
-                MissingUsers = _.MissingUsers.Select(u => new UserModel()
-                {
-                    UserId = u.UserId,
-                    Name = u.Name,
-                    Surname = u.Surname,
-                    Birthday = u.Birthday,
-                    Email = u.Email,
-                    Location = u.Location
-                }).ToList()
-            }).Single();
+            var lesson = this.context.Lessons.Single(_ => _.LessonId == id);
+
+            var lessonModel = this.FromLessonToLessonModel(lesson);
 
             return lessonModel;
         }
@@ -142,6 +106,14 @@ namespace SimpleCRUD2.Repositories
             course.Lessons.Add(lesson);
 
             this.context.Lessons.Add(lesson);
+            this.context.SaveChanges();
+        }
+
+        public void RemoveLessonById(int lessonId)
+        {
+            var lesson = this.context.Lessons.Single(_ => _.LessonId == lessonId);
+
+            this.context.Lessons.Remove(lesson);
             this.context.SaveChanges();
         }
 
@@ -161,6 +133,61 @@ namespace SimpleCRUD2.Repositories
             }
 
             this.context.SaveChanges();
+        }
+
+        private UserModel FromUserToUserModel(User user)
+        {
+            var userModel = new UserModel()
+            {
+                UserId = user.UserId,
+                Name = user.Name,
+                Surname = user.Surname,
+                Birthday = user.Birthday,
+                Email = user.Email,
+                Location = user.Location
+            };
+
+            return userModel;
+        }
+
+        private LessonModel FromLessonToLessonModel(Lesson lesson)
+        {
+            var usersList = new List<UserModel>();
+
+            foreach (var user in lesson.MissingUsers)
+            {
+                usersList.Add(this.FromUserToUserModel(user));
+            }
+
+            var lessonModel = new LessonModel()
+            {
+                LessonId = lesson.LessonId,
+                Name = lesson.Name,
+                DateTime = lesson.DateTime,
+                MissingUsers = usersList
+            };
+
+            return lessonModel;
+        }
+
+        private CourseModel FromCourseToCourseModel(Course course)
+        {
+            var lessonsList = new List<LessonModel>();
+
+            foreach (var lesson in course.Lessons)
+            {
+                lessonsList.Add(this.FromLessonToLessonModel(lesson));
+            }
+
+            var courseModel = new CourseModel()
+            {
+                CourseId = course.CourseId,
+                Name = course.Name,
+                IsDone = course.IsDone,
+                Lessons = lessonsList
+            };
+
+            return courseModel;
         }
     }
 }

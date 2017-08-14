@@ -55,6 +55,18 @@ namespace SimpleCRUD2.Controllers
                 return this.View("AddLessonsToCourse", addLessonsViewModel);
             }
 
+            var lessons = this.repository.GetAllLessons();
+
+            foreach (var lesson in lessons)
+            {
+                if (lesson.DateTime == addLessonsViewModel.LessonModel.DateTime)
+                {
+                    ModelState.AddModelError(string.Empty, "Date and time has been used");
+                    addLessonsViewModel.CourseModel = this.repository.GetCourseByName(addLessonsViewModel.CourseModel.Name);
+                    return this.View("AddLessonsToCourse", addLessonsViewModel);
+                }
+            }
+
             var lessonModel = new LessonModel()
             {
                 Name = addLessonsViewModel.LessonModel.Name,
@@ -71,6 +83,14 @@ namespace SimpleCRUD2.Controllers
             addLessonsViewModel.CourseModel = this.repository.GetCourseByName(addLessonsViewModel.CourseModel.Name);
 
             return this.View("AddLessonsToCourse", addLessonsViewModel);
+        }
+
+        [HttpPost]
+        public void RemoveLessonAjax()
+        {
+            var lessonId = Convert.ToInt32(Request.Form.GetValues("lessonId")[0]);
+
+            this.repository.RemoveLessonById(lessonId);
         }
     }
 }

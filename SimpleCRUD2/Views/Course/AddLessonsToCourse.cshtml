@@ -4,7 +4,7 @@
 
 @foreach (var lesson in Model.CourseModel.Lessons)
 {
-    <h4>@lesson.Name @lesson.DateTime</h4>
+    <h4 id="@lesson.LessonId">@lesson.Name @lesson.DateTime <button id="remove" data-id="@lesson.LessonId" class="btn btn-danger btn-xs">Remove</button></h4>
 }
 
 <h2>Adding lessons</h2>
@@ -40,4 +40,38 @@
         <div class="form-actions no-color">
             <input type="submit" value="Add lesson" class="btn btn-default" />
         </div>
+}
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('button#remove').click(function () {
+
+                var lessonId = $(this).attr('data-id');
+                var lesson = $('h4#' + lessonId);
+
+                var data = new FormData();
+                data.append('lessonId', lessonId);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveLessonAjax", "Course")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        lesson.addClass('hidden');
+                        alert('The lesson removed');
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responsetext);
+                    }
+                });
+            });
+
+        });
+    </script>
 }
