@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SimpleCRUD2.Models;
 
 namespace SimpleCRUD2.Test
@@ -25,6 +26,24 @@ namespace SimpleCRUD2.Test
             usersFake.Add(user7);
 
             return usersFake;
+        }
+
+        internal static IEnumerable<LessonModel> GetFiveLessonsList()
+        {
+            var lesson = new LessonModel() { LessonId = 1, Name = "l", DateTime = new DateTime(2001, 01, 01) };
+            var lesson2 = new LessonModel() { LessonId = 2, Name = "ll", DateTime = new DateTime(2001, 01, 02) };
+            var lesson3 = new LessonModel() { LessonId = 3, Name = "lll", DateTime = new DateTime(2001, 01, 03) };
+            var lesson4 = new LessonModel() { LessonId = 4, Name = "llll", DateTime = new DateTime(2001, 01, 04) };
+            var lesson5 = new LessonModel() { LessonId = 5, Name = "lllll", DateTime = new DateTime(2001, 01, 05) };
+
+            var lessonsFake = new List<LessonModel>();
+            lessonsFake.Add(lesson);
+            lessonsFake.Add(lesson2);
+            lessonsFake.Add(lesson3);
+            lessonsFake.Add(lesson4);
+            lessonsFake.Add(lesson5);
+
+            return lessonsFake;
         }
     }
 }
