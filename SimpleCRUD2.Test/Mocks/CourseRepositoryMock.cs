@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
 
@@ -27,12 +28,19 @@ namespace SimpleCRUD2.Test.Mocks
 
         public IEnumerable<LessonModel> GetAllLessons()
         {
-            return TestHelper.GetFiveLessonsList();
+            return TestHelper.GetTwelveLessonsList();
         }
 
         public CourseModel GetCourseByName(string name)
         {
-            return new CourseModel() { Name = name };
+            var course = new CourseModel() { Name = name };
+            
+            foreach (var lesson in TestHelper.GetTwelveLessonsList())
+            {
+                course.Lessons.Add(lesson);
+            }
+
+            return course;
         }
 
         public LessonModel GetLessonById(int id)
@@ -42,12 +50,12 @@ namespace SimpleCRUD2.Test.Mocks
 
         public IEnumerable<LessonModel> GetLessonListForPage(int pageNumber, int pageSize, string courseName)
         {
-            throw new NotImplementedException();
+            return TestHelper.GetTwelveLessonsList().Skip(10);
         }
 
         public IEnumerable<CourseModel> GetReadyCourses()
         {
-            throw new NotImplementedException();
+            return TestHelper.GetThreeCoursesList();
         }
 
         public void RemoveLessonById(int lessonId)

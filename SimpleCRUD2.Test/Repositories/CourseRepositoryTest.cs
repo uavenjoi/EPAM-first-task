@@ -23,6 +23,11 @@ namespace SimpleCRUD2.Test.Repositories
             var lesson = new Lesson { LessonId = 1, Name = "test", DateTime = new DateTime(2000, 12, 02) };
             var lesson2 = new Lesson { Name = "test", DateTime = new DateTime(2000, 12, 01) };
 
+            var user = new User() { UserId = 1 };
+            var user2 = new User() { UserId = 2 };
+
+            lesson.MissingUsers.Add(user);
+
             var lessons = new List<Lesson>() { lesson, lesson2 };
 
             mock.Setup(_ => _.Courses).Returns(new DbSetMock<Course>()
@@ -44,6 +49,12 @@ namespace SimpleCRUD2.Test.Repositories
             {
                 lesson,
                 lesson2
+            });
+
+            mock.Setup(_ => _.Users).Returns(new DbSetMock<User>()
+            {
+                user,
+                user2
             });
 
             this.repository = new CourseRepository(mock.Object);
@@ -120,6 +131,34 @@ namespace SimpleCRUD2.Test.Repositories
             var testCount2 = course2.Lessons.Count;
 
             Assert.AreEqual(testCount + 1, testCount2);
+        }
+
+        [Test]
+        public void RemoveLessonById_WorksCorrectly()
+        {
+            this.repository.RemoveLessonById(1);
+            var testDelegate = new TestDelegate(delegate() { this.repository.GetLessonById(1); });
+
+            Assert.Throws<InvalidOperationException>(testDelegate);
+            Assert.AreEqual(1, this.repository.GetAllLessons().Count());
+        }
+
+        [Test]
+        public void AddUserToMissingLesson_WorksCorrectlyIfMissingUsersContainsUser()
+        {
+            this.repository.AddUserToMissingLesson(1, 1);
+            var testCount = this.repository.GetLessonById(1).MissingUsers.Count;
+
+            Assert.Zero(testCount);
+        }
+
+        [Test]
+        public void AddUserToMissingLesson_WorksCorrectlyIfMissingUsersDoesNotContainsUser()
+        {
+            this.repository.AddUserToMissingLesson(2, 1);
+            var testCount = this.repository.GetLessonById(1).MissingUsers.Count;
+
+            Assert.AreEqual(2, testCount);
         }
     }
 }

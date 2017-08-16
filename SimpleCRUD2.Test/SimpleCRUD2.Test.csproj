@@ -98,7 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountControllerTest.cs" />
+    <Compile Include="Controllers\AdminControllerTest.cs" />
     <Compile Include="Controllers\CourseControllerTest.cs" />
+    <Compile Include="Controllers\ModerControllerTest.cs" />
     <Compile Include="Mocks\CourseRepositoryMock.cs" />
     <Compile Include="Mocks\DbSetMock.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />

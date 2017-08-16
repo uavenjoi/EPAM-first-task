@@ -84,7 +84,6 @@ namespace SimpleCRUD2.Test
             Assert.AreEqual(5, model.PageInfo.PageSize);
             Assert.AreEqual(7, model.PageInfo.TotalItems);
             Assert.AreEqual(2, model.PageInfo.TotalPages);
-            Assert.AreEqual(2, model.PageInfo.PageCountPerPage);
         }
 
         [Test]
@@ -100,7 +99,6 @@ namespace SimpleCRUD2.Test
             Assert.AreEqual(5, model2.PageInfo.PageSize);
             Assert.AreEqual(7, model2.PageInfo.TotalItems);
             Assert.AreEqual(2, model2.PageInfo.TotalPages);
-            Assert.AreEqual(2, model2.PageInfo.PageCountPerPage);
         }
 
         [Test]

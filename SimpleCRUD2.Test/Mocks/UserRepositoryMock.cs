@@ -25,7 +25,6 @@ namespace SimpleCRUD2.Test
 
         public void AddUsersToRoles(string[] emails, string[] roleNames)
         {
-            throw new NotImplementedException();
         }
 
         public void CreateRole(string roleName)
@@ -43,12 +42,12 @@ namespace SimpleCRUD2.Test
 
         public ICollection<Role> GetRolesForUser(string email)
         {
-            throw new NotImplementedException();
+            return new List<Role>();
         }
 
         public IEnumerable<UserModel> GetStudentsUsersList()
         {
-            throw new NotImplementedException();
+            return TestHelper.GetSevenUsersList();
         }
 
         public UserModel GetUserByEmail(string email)
@@ -106,12 +105,10 @@ namespace SimpleCRUD2.Test
 
         public void RemoveUserFromAllRoles(int id)
         {
-            throw new NotImplementedException();
         }
 
         public void RemoveUsersFromRoles(string[] emails, string[] roleNames)
         {
-            throw new NotImplementedException();
         }
 
         public bool ValidateUser(string email, string password)
