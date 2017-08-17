@@ -7,6 +7,8 @@ namespace SimpleCRUD2.Interfaces
     {
         bool CreateCourse(string name);
 
+        void DeleteCourseById(int id);
+
         CourseModel GetCourseByName(string name);
 
         void AddLesson(CourseModel courseModel, LessonModel lessonModel);

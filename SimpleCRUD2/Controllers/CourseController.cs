@@ -92,5 +92,13 @@ namespace SimpleCRUD2.Controllers
 
             this.repository.RemoveLessonById(lessonId);
         }
+
+        [HttpPost]
+        public void DeleteCourseAjax()
+        {
+            var courseId = Convert.ToInt32(Request.Form.GetValues("courseId")[0]);
+
+            this.repository.DeleteCourseById(courseId);
+        }
     }
 }

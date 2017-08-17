@@ -34,6 +34,14 @@ namespace SimpleCRUD2.Repositories
             return false;
         }
 
+        public void DeleteCourseById(int id)
+        {
+            var course = this.context.Courses.Single(_ => _.CourseId == id);
+
+            this.context.Courses.Remove(course);
+            this.context.SaveChanges();
+        }
+
         public IEnumerable<CourseModel> GetReadyCourses()
         {
             var courses = this.context.Courses.Where(_ => _.IsDone).ToList();

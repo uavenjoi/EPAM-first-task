@@ -4,11 +4,50 @@
 
 @foreach (var course in Model)
 {
-    <div>
+    <div id="@course.CourseId">
         @Html.ActionLink(course.Name, "CourseInfo", "Moder", new { name = course.Name }, new { })
+
+        @if (User.IsInRole("admin"))
+        {
+            <button id="remove" data-id="@course.CourseId" class="btn btn-danger btn-xs">Remove</button>
+        }
     </div>
 }
 <br />
 <div>
     @Html.ActionLink("Back to List", "Index", "Home")
 </div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('button#remove').click(function () {
+
+                var courseId = $(this).attr('data-id');
+                var course = $('div#' + courseId);
+
+                var data = new FormData();
+                data.append('courseId', courseId);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteCourseAjax", "Course")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        course.addClass('hidden');
+                        alert('The course removed');
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responsetext);
+                    }
+                });
+            });
+
+        });
+    </script>
+}
