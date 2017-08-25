@@ -10,6 +10,7 @@
         @if (User.IsInRole("admin"))
         {
             <button id="remove" data-id="@course.CourseId" class="btn btn-danger btn-xs">Remove</button>
+            @Html.ActionLink("Save as Xml file", "SaveCourseToXml", "Course", new { name = course.Name }, new { @class = "btn btn-info btn-xs" })
         }
     </div>
 }

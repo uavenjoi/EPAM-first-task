@@ -26,6 +26,11 @@ namespace SimpleCRUD2.Test.Mocks
             return false;
         }
 
+        public void DeleteCourseById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<LessonModel> GetAllLessons()
         {
             return TestHelper.GetTwelveLessonsList();

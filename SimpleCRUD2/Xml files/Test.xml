@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<course>
+  <courseId>74344542</courseId>
+  <courseName>Testtesttesytttest</courseName>
+  <isDone>False</isDone>
+  <lessonsList>
+    <lesson>
+      <lessonId>24323432</lessonId>
+      <lessonName>Lesson hgfhhgfh1</lessonName>
+      <dateTime>11/3/2010 4:45:10 PM</dateTime>
+    </lesson>
+    <lesson>
+      <lessonId>2423323</lessonId>
+      <lessonName>Lesson fgfhgfhfghfh2</lessonName>
+      <dateTime>9/4/2010 5:50:10 PM</dateTime>
+    </lesson>
+    <lesson>
+      <lessonId>476234</lessonId>
+      <lessonName>Lesson fhfhfhfg3</lessonName>
+      <dateTime>10/5/2010 6:52:10 PM</dateTime>
+    </lesson>
+  </lessonsList>
+</course>

@@ -5,6 +5,8 @@ namespace SimpleCRUD2.Interfaces
 {
     public interface ICourseRepository
     {
+        void CreateCourseFromCourseModel(CourseModel courseModel);
+
         bool CreateCourse(string name);
 
         void DeleteCourseById(int id);

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SimpleCRUD2.Interfaces;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels.CourseViewModels;
+using SimpleCRUD2.XmlWork;
 
 namespace SimpleCRUD2.Controllers
 {
@@ -13,16 +12,51 @@ namespace SimpleCRUD2.Controllers
     public class CourseController : Controller
     {
         private ICourseRepository repository;
+        private IXmlProcessor xmlProcessor;
 
-        public CourseController(ICourseRepository repository)
+        public CourseController(ICourseRepository repository, IXmlProcessor xmlProcessor)
         {
             this.repository = repository;
+            this.xmlProcessor = xmlProcessor;
         }
-
+        
         [HttpGet]
         public ActionResult CreateCourse()
         {
             return this.View("CreateCourse");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetCourseFromXmlFile(HttpPostedFileBase xmlFile)
+        {
+            if (XmlValidator.IsXmlFile(xmlFile))
+            {
+                var courseModel = this.xmlProcessor.GetCourseModelFromXml(xmlFile.FileName);
+
+                this.repository.CreateCourseFromCourseModel(courseModel);
+
+                if (courseModel.IsDone.Equals(false))
+                {
+                    var addLessonsViewModel = new AddLessonsViewModel() { CourseModel = courseModel };
+
+                    return this.View("AddLessonsToCourse", addLessonsViewModel);
+                }
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            return this.View("Error");
+        }
+
+        [HttpGet]
+        public ActionResult SaveCourseToXml(string name)
+        {
+            var courseModel = this.repository.GetCourseByName(name);
+
+            this.xmlProcessor.CreateXmlFromCourseModel(courseModel);
+
+            return this.RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
