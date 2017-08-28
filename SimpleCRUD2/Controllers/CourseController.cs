@@ -36,7 +36,7 @@ namespace SimpleCRUD2.Controllers
 
                 this.repository.CreateCourseFromCourseModel(courseModel);
 
-                if (courseModel.IsDone.Equals(false))
+                if (!courseModel.IsDone)
                 {
                     var addLessonsViewModel = new AddLessonsViewModel() { CourseModel = courseModel };
 

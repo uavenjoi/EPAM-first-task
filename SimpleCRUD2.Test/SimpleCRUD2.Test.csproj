@@ -104,6 +104,7 @@
     <Compile Include="Mocks\CourseRepositoryMock.cs" />
     <Compile Include="Mocks\DbSetMock.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Mocks\XmlLinqProcessorMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Mocks\UserRepositoryMock.cs" />

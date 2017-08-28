@@ -26,9 +26,12 @@ namespace SimpleCRUD2.Test.Mocks
             return false;
         }
 
+        public void CreateCourseFromCourseModel(CourseModel courseModel)
+        {
+        }
+
         public void DeleteCourseById(int id)
         {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<LessonModel> GetAllLessons()

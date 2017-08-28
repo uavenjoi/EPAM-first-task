@@ -1,10 +1,14 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
+using Moq;
 using NUnit.Framework;
 using SimpleCRUD2.Controllers;
 using SimpleCRUD2.Models;
 using SimpleCRUD2.Models.ViewModels.CourseViewModels;
 using SimpleCRUD2.Test.Mocks;
+using SimpleCRUD2.XmlWork;
 
 namespace SimpleCRUD2.Test.Controllers
 {
@@ -16,7 +20,7 @@ namespace SimpleCRUD2.Test.Controllers
         [SetUp]
         public void Initialize()
         {
-            this.controller = new CourseController(new CourseRepositoryMock());
+            this.controller = new CourseController(new CourseRepositoryMock(), new XmlLinqProcessorMock());
         }
 
         [Test]
@@ -98,6 +102,49 @@ namespace SimpleCRUD2.Test.Controllers
             ViewResult result = this.controller.AddLessonsToCourse(mockModel) as ViewResult;
 
             Assert.AreEqual("AddLessonsToCourse", result.ViewName);
+        }
+
+        [Test]
+        public void GetCourseFromXmlFile_ReturnCorrectViewIfFileIsWrong()
+        {
+            var mock = new Mock<HttpPostedFileBase>();
+            mock.Setup(_ => _.FileName).Returns("test");
+
+            ViewResult result = this.controller.GetCourseFromXmlFile(mock.Object) as ViewResult;
+
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [Test]
+        public void GetCourseFromXmlFile_ReturnCorrectViewIfCourseModelIsNotDone()
+        {
+            var mock = new Mock<HttpPostedFileBase>();
+            mock.Setup(_ => _.FileName).Returns("test.xml");
+
+            ViewResult result = this.controller.GetCourseFromXmlFile(mock.Object) as ViewResult;
+
+            Assert.AreEqual("AddLessonsToCourse", result.ViewName);
+        }
+
+        [Test]
+        public void GetCourseFromXmlFile_ReturnCorrectValueIfCourseModelIsDone()
+        {
+            var mock = new Mock<HttpPostedFileBase>();
+            mock.Setup(_ => _.FileName).Returns("true.xml");
+
+            RedirectToRouteResult result = this.controller.GetCourseFromXmlFile(mock.Object) as RedirectToRouteResult;
+
+            Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+
+        [Test]
+        public void SaveCourseToXml_ReturnCorrectValue()
+        {
+            RedirectToRouteResult result = this.controller.SaveCourseToXml("test") as RedirectToRouteResult;
+
+            Assert.IsInstanceOf(typeof(RedirectToRouteResult), result);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
         }
     }
 }
