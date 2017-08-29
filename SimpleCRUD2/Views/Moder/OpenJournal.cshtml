@@ -2,18 +2,20 @@
 
 <h2>Courses list:</h2>
 
-@foreach (var course in Model)
-{
-    <div id="@course.CourseId">
-        @Html.ActionLink(course.Name, "CourseInfo", "Moder", new { name = course.Name }, new { })
+<ol>
+    @foreach (var course in Model)
+    {
+        <li id="@course.CourseId" style="font-size:medium">
+            @Html.ActionLink(course.Name, "CourseInfo", "Moder", new { name = course.Name }, new { })
 
-        @if (User.IsInRole("admin"))
-        {
-            <button id="remove" data-id="@course.CourseId" class="btn btn-danger btn-xs">Remove</button>
-            @Html.ActionLink("Save as Xml file", "SaveCourseToXml", "Course", new { name = course.Name }, new { @class = "btn btn-info btn-xs" })
-        }
-    </div>
-}
+            @if (User.IsInRole("admin"))
+            {
+                <button id="remove" data-id="@course.CourseId" class="btn btn-danger btn-xs">Remove</button>
+                @Html.ActionLink("Save as Xml file", "SaveCourseToXml", "Course", new { name = course.Name }, new { @class = "btn btn-info btn-xs" })
+            }
+        </li>
+    }
+</ol>
 <br />
 <div>
     @Html.ActionLink("Back to List", "Index", "Home")
@@ -28,7 +30,7 @@
             $('button#remove').click(function () {
 
                 var courseId = $(this).attr('data-id');
-                var course = $('div#' + courseId);
+                var course = $('li#' + courseId);
 
                 var data = new FormData();
                 data.append('courseId', courseId);

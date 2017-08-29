@@ -6,28 +6,6 @@
     <title>Index</title>
 </head>
 <body>
-    <div>
-        <h3>
-            Hello @User.Identity.Name
-        </h3>
-    </div>
-    <div>
-        @if (User.IsInRole("admin"))
-        {
-            <div class="row">
-                <div class="col-md-4">
-                    @Html.ActionLink("Create new user", "AddUser", "Home", new { }, new { @class = "btn btn-success btn-sm" })
-                </div>
-                <div class="col-md-4 col-md-pull-2">
-                    @Html.ActionLink("Role management", "Admin", "Admin", new { }, new { @class = "btn btn-success btn-sm" })
-                </div>
-                <div class="col-md-4 col-md-pull-4" style="padding-left: 25px">
-                    @Html.ActionLink("Create course", "CreateCourse", "Course", new { }, new { @class = "btn btn-success btn-sm" })
-                </div>
-            </div>
-
-        }
-    </div>
     <br />
     <table class="table table-striped table-hover" border="1" cellpadding="2">
         <thead>
@@ -39,7 +17,7 @@
                 <th>Birthday</th>
                 @if (User.IsInRole("moder"))
                 {
-                    <th>@Html.ActionLink("Open journal", "OpenJournal", "Moder", new { }, new { @class = "btn btn-info btn-sm" })</th>
+                    <th>@Html.ActionLink("Open journal", "OpenJournal", "Moder", new { }, new { @class = "btn btn-success btn-sm" })</th>
                 }
             </tr>
         </thead>
@@ -77,6 +55,9 @@
                             @Html.ActionLink("Edit", "EditUserInfo", "Home", new { id = user.UserId }, new { @class = "btn btn-info btn-xs" })
                             @Html.ActionLink("Delete", "DeleteUser", "Home", new { id = user.UserId }, new { @class = "btn btn-danger btn-xs" })
                         </td>
+                    } else
+                    {
+                        <td></td>
                     }
                 </tr>
             }
@@ -84,7 +65,5 @@
     </table>
 
     @Html.Partial("_Pagination", Model.PageInfo)
-    <br />
-    @Html.ActionLink("Log out", "Logout", "Account")
 </body>
 </html>

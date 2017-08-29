@@ -8,6 +8,25 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <nav class="navbar navbar-inverse" style="border-radius:0px">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                @Html.ActionLink("Main page", "Index", "Home", new { }, new { @class = "navbar-brand" })
+            </div>
+            @if (User.IsInRole("admin"))
+            {
+                <ul class="nav navbar-nav">
+                    <li><a href=@Url.Action("AddUser", "Home")>Create new user</a></li>
+                    <li><a href=@Url.Action("Admin", "Admin")>Role management</a></li>
+                    <li><a href=@Url.Action("CreateCourse", "Course")>Create course</a></li>
+                </ul>
+            }
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href=@Url.Action("Logout", "Account")><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+            <p class="navbar-text navbar-right" style="font-size:medium">Hello @User.Identity.Name</p>
+        </div>
+    </nav>
     <div style="margin-top: 10px">
         <div style="margin: auto; width:800px">
             @RenderBody()

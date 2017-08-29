@@ -49,7 +49,7 @@ namespace SimpleCRUD2.XmlWork
 
             xmlCourse.Add(course);
 
-            var path = HttpContext.Current.Server.MapPath("~/Xml files/" + courseModel.Name);
+            var path = HttpContext.Current.Server.MapPath("~/Xml files/" + courseModel.Name + ".xml");
 
             using (FileStream stream = new FileStream(path, FileMode.Create))
             {
